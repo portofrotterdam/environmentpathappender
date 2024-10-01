@@ -16,7 +16,8 @@ pilot:
 experimental:
   plugins:
     environmentpathappender:
-      env: "MY_ENV_VARIABLE"
+      moduleName: github.com/portofrotterdam/environmentpathappender
+      version: v0.0.1
 ```
 
 ### Dynamic
