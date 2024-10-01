@@ -1,0 +1,9 @@
+displayName: "Environment Path Appender"
+type: middleware
+
+import: github.com/portofrotterdam/environmentpathappender
+
+summary: "Add environment variable to path"
+
+testData:
+  env: TEST_ENV
