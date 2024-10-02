@@ -34,7 +34,7 @@ func New(ctx context.Context, next http.Handler, config *Config, name string) (h
 
 	var environmentVar = os.Getenv(environmentVarName)
 	if environmentVar == "" {
-		slog.Warn("missing env variable " + environmentVarName)
+		slog.Warn("environmentpathappender: missing env variable " + environmentVarName)
 	}
 
 	if strings.Contains(environmentVar, "/") {
