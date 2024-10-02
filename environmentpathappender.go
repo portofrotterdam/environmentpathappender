@@ -4,7 +4,6 @@ package environmentpathappender
 import (
 	"context"
 	"fmt"
-	"log/slog"
 	"net/http"
 	"os"
 	"strings"
@@ -34,7 +33,7 @@ func New(ctx context.Context, next http.Handler, config *Config, name string) (h
 
 	var environmentVar = os.Getenv(environmentVarName)
 	if environmentVar == "" {
-		slog.Warn("environmentpathappender: missing env variable " + environmentVarName)
+		fmt.Println("environmentpathappender: missing env variable " + environmentVarName)
 	}
 
 	if strings.Contains(environmentVar, "/") {
