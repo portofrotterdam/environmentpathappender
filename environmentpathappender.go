@@ -4,6 +4,7 @@ package environmentpathappender
 import (
 	"context"
 	"fmt"
+	"log/slog"
 	"net/http"
 	"os"
 	"strings"
@@ -33,7 +34,7 @@ func New(ctx context.Context, next http.Handler, config *Config, name string) (h
 
 	var environmentVar = os.Getenv(environmentVarName)
 	if environmentVar == "" {
-		return nil, fmt.Errorf("missing env variable %v", environmentVarName)
+		slog.Warn("missing env variable " + environmentVarName)
 	}
 
 	if strings.Contains(environmentVar, "/") {
@@ -47,6 +48,8 @@ func New(ctx context.Context, next http.Handler, config *Config, name string) (h
 }
 
 func (c *environmentPathAppenderPlugin) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
-	req.URL.Path = req.URL.Path + "/" + c.EnvironmentVar
+	if c.EnvironmentVar != "" {
+		req.URL.Path = req.URL.Path + "/" + c.EnvironmentVar
+	}
 	c.next.ServeHTTP(rw, req)
 }

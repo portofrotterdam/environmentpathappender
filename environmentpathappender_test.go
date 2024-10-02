@@ -12,6 +12,8 @@ import (
 
 func TestMissingEnvVariable(t *testing.T) {
 	envVar := "TEST_ENV"
+	requestUrl := "https://test.com/ship"
+	expectedPath := "/ship"
 
 	cfg := environmentpathappender.CreateConfig()
 	cfg.Env = envVar
@@ -19,10 +21,20 @@ func TestMissingEnvVariable(t *testing.T) {
 	ctx := context.Background()
 	next := http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {})
 
-	_, err := environmentpathappender.New(ctx, next, cfg, "environmentpathappender")
-	if err == nil {
+	handler, err := environmentpathappender.New(ctx, next, cfg, "environmentpathappender")
+	if err != nil {
 		t.Fatal(err)
 	}
+
+	recorder := httptest.NewRecorder()
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, requestUrl, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	handler.ServeHTTP(recorder, req)
+
+	assertRequestPathAdded(t, req, expectedPath)
 }
 
 func TestMissingEnvParamater(t *testing.T) {
