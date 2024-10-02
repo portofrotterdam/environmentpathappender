@@ -35,6 +35,10 @@ func TestMissingEnvVariable(t *testing.T) {
 	handler.ServeHTTP(recorder, req)
 
 	assertRequestPathAdded(t, req, expectedPath)
+
+	envVar = ""
+	requestUrl = ""
+	expectedPath = ""
 }
 
 func TestMissingEnvParamater(t *testing.T) {
@@ -55,6 +59,9 @@ func TestMissingEnvParamater(t *testing.T) {
 	if err == nil {
 		t.Fatal(err)
 	}
+
+	envVar = "TEST_ENV"
+	envValue = "FOO"
 }
 
 func TestNoSlashAllowed(t *testing.T) {
@@ -76,6 +83,9 @@ func TestNoSlashAllowed(t *testing.T) {
 	if err == nil {
 		t.Fatal(err)
 	}
+
+	envVar = ""
+	envValue = ""
 }
 
 func TestEnvironmentPathAppend(t *testing.T) {
@@ -109,6 +119,11 @@ func TestEnvironmentPathAppend(t *testing.T) {
 	handler.ServeHTTP(recorder, req)
 
 	assertRequestPathAdded(t, req, expectedPath)
+
+	envVar = ""
+	envValue = ""
+	requestUrl = ""
+	expectedPath = ""
 }
 
 func assertRequestPathAdded(t *testing.T, req *http.Request, expectedValue string) {
