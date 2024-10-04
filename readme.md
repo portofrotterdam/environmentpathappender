@@ -17,7 +17,7 @@ experimental:
   plugins:
     environmentpathappender:
       moduleName: github.com/portofrotterdam/environmentpathappender
-      version: v0.0.2
+      version: v0.0.4
 ```
 
 ### Dynamic
